@@ -1,18 +1,22 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { 
-  User, Mail, Lock, Moon, Sun, Smartphone, Download, Check, Sparkles, BookOpen, AlertCircle, Heart, Share2, Compass, Bell, Settings as SettingsIcon, LogOut, Code, FileText, CheckCircle2, ChevronRight, RefreshCw, Layers
+  Moon, Sun, ChevronRight
 } from "lucide-react";
-import { MOCK_MEDITATIONS } from "./data";
 
 export const SettingsThemeScreen = (props: any) => {
   const {
-    setActiveScreen, currentUser, handleLogout,
+    setActiveScreen,
     isDarkMode, setIsDarkMode, triggerAlert,
-    favorites, setActiveDetailsId,
-    isNotificationEnabled, setIsNotificationEnabled, handleTestNotificationTrigger
+    appTheme, setAppTheme
   } = props;
   
+  const handleThemeChange = (theme: string, isDark: boolean) => {
+    setAppTheme(theme);
+    setIsDarkMode(isDark);
+    triggerAlert("Theme Applied", `App theme changed to ${theme}`, "success");
+  };
+
   return (
     <>
       <motion.div 
@@ -37,11 +41,24 @@ export const SettingsThemeScreen = (props: any) => {
                       
                       {/* Interactive Switch */}
                       <button 
-                        onClick={() => setIsDarkMode(!isDarkMode)}
+                        onClick={() => handleThemeChange(isDarkMode ? "light" : "dark", !isDarkMode)}
                         className={`w-11 h-6 rounded-full p-0.5 transition ${isDarkMode ? "bg-blue-600" : "bg-slate-300"}`}
                       >
                         <div className={`w-5 h-5 bg-white rounded-full shadow transition-transform ${isDarkMode ? "translate-x-5" : ""}`} />
                       </button>
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col gap-2 shadow-sm">
+                      <span className="font-bold text-xs block text-slate-900 dark:text-white mb-2">Custom Themes Options</span>
+                      
+                      <div className="grid grid-cols-2 gap-2">
+                        <button onClick={() => handleThemeChange("dark", true)} className={`p-2 rounded-lg text-xs font-bold border ${appTheme === 'dark' ? 'border-blue-500 bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-white' : 'border-slate-200 dark:border-slate-700 bg-slate-950 text-slate-100'}`}>Dark Theme</button>
+                        <button onClick={() => handleThemeChange("nature", true)} className={`p-2 rounded-lg text-xs font-bold border ${appTheme === 'nature' ? 'border-green-500 bg-green-50 dark:bg-green-900 text-green-600 dark:text-white' : 'border-slate-200 dark:border-slate-700 bg-green-950 text-green-100'}`}>Nature Theme</button>
+                        <button onClick={() => handleThemeChange("lake", true)} className={`p-2 rounded-lg text-xs font-bold border ${appTheme === 'lake' ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-900 text-cyan-600 dark:text-white' : 'border-slate-200 dark:border-slate-700 bg-cyan-950 text-cyan-100'}`}>Lake Theme</button>
+                        <button onClick={() => handleThemeChange("mountain", true)} className={`p-2 rounded-lg text-xs font-bold border ${appTheme === 'mountain' ? 'border-stone-500 bg-stone-50 dark:bg-stone-900 text-stone-600 dark:text-white' : 'border-slate-200 dark:border-slate-700 bg-stone-900 text-stone-100'}`}>Mountain Theme</button>
+                        <button onClick={() => handleThemeChange("bright", false)} className={`p-2 rounded-lg text-xs font-bold border ${appTheme === 'bright' ? 'border-yellow-500 bg-yellow-50 dark:bg-yellow-100 text-yellow-900 dark:text-yellow-900' : 'border-slate-200 dark:border-slate-700 bg-yellow-50 text-yellow-900'}`}>Bright Theme</button>
+                        <button onClick={() => handleThemeChange("light", false)} className={`p-2 rounded-lg text-xs font-bold border ${appTheme === 'light' ? 'border-slate-500 bg-slate-50 dark:bg-slate-100 text-slate-900' : 'border-slate-200 dark:border-slate-700 bg-slate-100 text-slate-800'}`}>Standard Light</button>
+                      </div>
                     </div>
 
                     <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex justify-between items-center shadow-sm">

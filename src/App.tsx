@@ -22,6 +22,7 @@ import { SettingsMenuScreen } from './SettingsMenuScreen';
 import { SettingsThemeScreen } from './SettingsThemeScreen';
 import { SettingsFavouritesScreen } from './SettingsFavouritesScreen';
 import { SettingsRemindersScreen } from './SettingsRemindersScreen';
+import { SettingsHabitsScreen } from './SettingsHabitsScreen';
 import { NotificationAlert } from './NotificationAlert';
 export default function App() {
   // Mobile app simulator states
@@ -41,6 +42,7 @@ export default function App() {
   // States
   const [activeDetailsId, setActiveDetailsId] = useState<number>(1);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [appTheme, setAppTheme] = useState("light");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
   const [activeDetailsTab, setActiveDetailsTab] = useState<"About" | "Instructions">("About");
@@ -97,6 +99,22 @@ export default function App() {
   const [stepsCounter, setStepsCounter] = useState(7850);
   const [moodMood, setMoodMood] = useState("Calm");
   const [dailyStreakCounter, setDailyStreakCounter] = useState(12);
+
+  const [habits, setHabits] = useState<{ id: number; name: string; color: string; completed: boolean; completedAt: string | null }[]>([
+    { id: 1, name: "Workout", color: "orange", completed: false, completedAt: null },
+    { id: 2, name: "Meditate", color: "pink", completed: false, completedAt: null },
+    { id: 3, name: "Read a Book", color: "emerald", completed: false, completedAt: null },
+    { id: 4, name: "Drink Water", color: "blue", completed: false, completedAt: null },
+    { id: 5, name: "Practice Gratitude", color: "yellow", completed: false, completedAt: null },
+    { id: 6, name: "Wake Up Early", color: "orange", completed: false, completedAt: null },
+    { id: 7, name: "Journal", color: "lime", completed: false, completedAt: null },
+  ]);
+  const [habitNotifications, setHabitNotifications] = useState<{ id: number; name: string; times: string[]; color: string }[]>([
+    { id: 1, name: "Drink water", times: ["09:00", "13:00", "17:00"], color: "blue" },
+    { id: 2, name: "Exercise", times: ["18:00"], color: "orange" },
+    { id: 3, name: "Sleep", times: ["22:00"], color: "indigo" },
+    { id: 4, name: "Take a break from computer screen time", times: ["11:00", "15:00"], color: "purple" }
+  ]);
 
   // 5. Yoga, Pilates, Exercise active selected items (to view overlay detailing instructions)
   const [selectedYogaItem, setSelectedYogaItem] = useState<number | null>(null);
@@ -979,7 +997,13 @@ export default function App() {
             </div>
 
             {/* Virtual Device Output Frame Screen */}
-            <div className={`flex-1 p-5 pt-10 pb-12 overflow-y-auto overflow-x-hidden relative transition-colors ${isDarkMode ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"}`}>
+            <div className={`flex-1 p-5 pt-10 pb-12 overflow-y-auto overflow-x-hidden relative transition-colors ${
+              appTheme === "nature" ? "bg-green-950 text-green-50" :
+              appTheme === "lake" ? "bg-cyan-900 text-cyan-50" :
+              appTheme === "mountain" ? "bg-stone-900 text-stone-100" :
+              appTheme === "bright" ? "bg-yellow-50 text-yellow-900" :
+              isDarkMode ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"
+            }`}>
               
               {/* App Header Graphic */}
               <div className="mb-4 bg-gradient-to-br from-blue-900 to-indigo-900 rounded-2xl p-4 shadow-lg flex flex-col items-center justify-center text-center border border-indigo-700/50 relative overflow-hidden">
@@ -1030,6 +1054,7 @@ export default function App() {
                     loginEmail={loginEmail} setLoginEmail={setLoginEmail} loginPassword={loginPassword} setLoginPassword={setLoginPassword}
                     phoneTab={phoneTab} setPhoneTab={setPhoneTab} activeDetailsId={activeDetailsId} setActiveDetailsId={setActiveDetailsId} favorites={favorites} setFavorites={setFavorites}
                     isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} isNotificationEnabled={isNotificationEnabled} setIsNotificationEnabled={setIsNotificationEnabled}
+                    habits={habits} setHabits={setHabits} habitNotifications={habitNotifications} setHabitNotifications={setHabitNotifications}
                     activeDetailsTab={activeDetailsTab} setActiveDetailsTab={setActiveDetailsTab} randomQuote={randomQuote} setRandomQuote={setRandomQuote} isQuoteLoading={isQuoteLoading} setIsQuoteLoading={setIsQuoteLoading}
                     simulatedAlert={simulatedAlert} setSimulatedAlert={setSimulatedAlert} simulatedRemindersTriggered={simulatedRemindersTriggered} setSimulatedRemindersTriggered={setSimulatedRemindersTriggered}
                     activeSoundPlaying={activeSoundPlaying} setActiveSoundPlaying={setActiveSoundPlaying} soundVolume={soundVolume} setSoundVolume={setSoundVolume}
@@ -1057,6 +1082,7 @@ export default function App() {
                     loginEmail={loginEmail} setLoginEmail={setLoginEmail} loginPassword={loginPassword} setLoginPassword={setLoginPassword}
                     phoneTab={phoneTab} setPhoneTab={setPhoneTab} activeDetailsId={activeDetailsId} setActiveDetailsId={setActiveDetailsId} favorites={favorites} setFavorites={setFavorites}
                     isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} isNotificationEnabled={isNotificationEnabled} setIsNotificationEnabled={setIsNotificationEnabled}
+                    habits={habits} setHabits={setHabits} habitNotifications={habitNotifications} setHabitNotifications={setHabitNotifications}
                     activeDetailsTab={activeDetailsTab} setActiveDetailsTab={setActiveDetailsTab} randomQuote={randomQuote} setRandomQuote={setRandomQuote} isQuoteLoading={isQuoteLoading} setIsQuoteLoading={setIsQuoteLoading}
                     simulatedAlert={simulatedAlert} setSimulatedAlert={setSimulatedAlert} simulatedRemindersTriggered={simulatedRemindersTriggered} setSimulatedRemindersTriggered={setSimulatedRemindersTriggered}
                     activeSoundPlaying={activeSoundPlaying} setActiveSoundPlaying={setActiveSoundPlaying} soundVolume={soundVolume} setSoundVolume={setSoundVolume}
@@ -1086,7 +1112,7 @@ export default function App() {
                 {/* 5A. SETTINGS - GLOBAL THEME CHANGE SWITCH (Task 2/3) */}
                 {activeScreen === "settings-theme" && (
                   <SettingsThemeScreen 
-                    setActiveScreen={setActiveScreen} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} triggerAlert={triggerAlert}
+                    setActiveScreen={setActiveScreen} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} triggerAlert={triggerAlert} appTheme={appTheme} setAppTheme={setAppTheme}
                   />
                 )}
 
@@ -1102,6 +1128,14 @@ export default function App() {
                   <SettingsRemindersScreen
                     setActiveScreen={setActiveScreen} isNotificationEnabled={isNotificationEnabled} setIsNotificationEnabled={setIsNotificationEnabled}
                     handleTestNotificationTrigger={handleTestNotificationTrigger}
+                    habitNotifications={habitNotifications} setHabitNotifications={setHabitNotifications} triggerAlert={triggerAlert}
+                  />
+                )}
+
+                {/* 5D. SETTINGS - HABITS LIST */}
+                {activeScreen === "settings-habits" && (
+                  <SettingsHabitsScreen
+                    setActiveScreen={setActiveScreen} habits={habits} setHabits={setHabits} triggerAlert={triggerAlert}
                   />
                 )}
                 

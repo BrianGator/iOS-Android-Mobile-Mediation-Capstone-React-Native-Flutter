@@ -30,8 +30,18 @@ export const HomeScreen = (props: any) => {
     aiFocus, setAiFocus, aiStressLevel, setAiStressLevel, aiEnergyLevel, setAiEnergyLevel, aiCustomResults, setAiCustomResults, isAiGenerating, setIsAiGenerating,
     selectedBodyScanNode, setSelectedBodyScanNode, scanPulseActive, setScanPulseActive,
     selectedDocsTab, setSelectedDocsTab, activeCodeFile, setActiveCodeFile, selectedScreenshotName, setSelectedScreenshotName,
-    handleLogin, handleRegister, triggerAlert, fetchRandomQuote, toggleFavorite, handleLogout, handleGenerateAiRecommendation
+    handleLogin, handleRegister, triggerAlert, fetchRandomQuote, toggleFavorite, handleLogout, handleGenerateAiRecommendation,
+    habits, setHabits, habitNotifications, setHabitNotifications
   } = props;
+
+  // New Trackers State
+  const [heartRate, setHeartRate] = useState<number>(72);
+  const [hrHistory, setHrHistory] = useState<{ id: number, val: number, time: string }[]>([]);
+  const [mindfulnessScore, setMindfulnessScore] = useState<number>(8);
+  const [sleepScore, setSleepScore] = useState<number>(85);
+  const [happinessScore, setHappinessScore] = useState<number>(7);
+  const [stressScore, setStressScore] = useState<number>(4);
+  const [inputWorkoutCategory, setInputWorkoutCategory] = useState<string>("Exercise");
   
   return (
     <>
@@ -46,6 +56,7 @@ export const HomeScreen = (props: any) => {
                     {/* Navigation / Header Bar */}
                     <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-900 pb-2.5">
                       <div className="flex items-center gap-1.5">
+                        <Home className="w-4 h-4 text-slate-800 dark:text-white" />
                         <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping" />
                         <span className="bg-blue-600/10 text-blue-600 dark:bg-blue-950 dark:text-blue-300 text-[10px] font-extrabold px-2 py-0.5 rounded border border-blue-200 dark:border-blue-900">
                           MindfulSpace Mobile v2.5
@@ -63,6 +74,60 @@ export const HomeScreen = (props: any) => {
                           <SettingsIcon className="w-3.5 h-3.5 text-slate-700 dark:text-slate-300" />
                         </button>
                       </div>
+                    </div>
+
+                    {/* QUICK METRICS DASHBOARD (At top of Home Screen) */}
+                    <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 mt-2 mb-2 scrollbar-hide">
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <Heart className="w-4 h-4 text-rose-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Heart Rate</span>
+                        <span className="text-sm font-extrabold">{heartRate || 0} <span className="text-[8px] font-normal opacity-70">BPM</span></span>
+                      </button>
+                      
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <Brain className="w-4 h-4 text-purple-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Mindfulness</span>
+                        <span className="text-sm font-extrabold">{mindfulnessScore || 0}<span className="text-[8px] font-normal opacity-70">/10</span></span>
+                      </button>
+                      
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <Moon className="w-4 h-4 text-indigo-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Sleep</span>
+                        <span className="text-sm font-extrabold text-indigo-600 dark:text-indigo-400">{sleepScore || 0}</span>
+                        <span className="text-[8px] font-bold text-slate-400">{sleepLog[0]?.hours || 0}h Log</span>
+                      </button>
+
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <span className="text-sm leading-none">😄</span>
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Happiness</span>
+                        <span className="text-sm font-extrabold">{happinessScore || 0}<span className="text-[8px] font-normal opacity-70">/10</span></span>
+                      </button>
+
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <Activity className="w-4 h-4 text-amber-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Stress</span>
+                        <span className="text-sm font-extrabold">{stressScore || 0}<span className="text-[8px] font-normal opacity-70">/10</span></span>
+                      </button>
+
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <Activity className="w-4 h-4 text-emerald-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Steps</span>
+                        <span className="text-sm font-extrabold">{stepsCounter || 0}</span>
+                        <span className="text-[8px] font-bold text-slate-400">/ 10k Today</span>
+                      </button>
+
+                      <button onClick={() => setPhoneTab("habits")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <CheckCircle2 className="w-4 h-4 text-sky-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Habits</span>
+                        <span className="text-sm font-extrabold">{habits?.filter((h: any) => h.completed).length || 0}</span>
+                        <span className="text-[8px] font-bold text-slate-400">/ {habits?.length || 0} Done</span>
+                      </button>
+
+                      <button onClick={() => setPhoneTab("trackers")} className="flex-none w-[90px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none text-center flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform text-slate-800 dark:text-white">
+                        <Dumbbell className="w-4 h-4 text-orange-500" />
+                        <span className="text-[9px] font-bold text-slate-400 mt-1">Activities</span>
+                        <span className="text-sm font-extrabold">{exerciseLog.length} <span className="text-[8px] font-normal opacity-70">logs</span></span>
+                      </button>
                     </div>
 
                     {/* ==================== TAB 1: MIND & MEDITATION HUB ==================== */}
@@ -423,37 +488,58 @@ export const HomeScreen = (props: any) => {
                                 placeholder="eg 07:00"
                               />
                             </div>
-                            <div className="col-span-2 mt-1">
-                              <label className="text-[8px] font-bold uppercase text-slate-400 block">Sleep depth rating</label>
-                              <select
-                                value={inputSleepRating}
-                                onChange={(e) => setInputSleepRating(e.target.value)}
-                                className="w-full text-[10px] p-1 rounded border border-slate-200 dark:bg-slate-900 text-slate-850 dark:text-white"
-                              >
-                                <option value="Deep & Restorative">Deep & Restorative</option>
-                                <option value="Good, calm dreams">Good, calm dreams</option>
-                                <option value="Light / Incomplete">Light / Incomplete</option>
-                                <option value="Fragmented sleep pattern">Fragmented sleep pattern</option>
-                              </select>
+                            <div className="col-span-2 mt-1 flex gap-2">
+                              <div className="flex-1">
+                                <label className="text-[8px] font-bold uppercase text-slate-400 block">Sleep depth rating</label>
+                                <select
+                                  value={inputSleepRating}
+                                  onChange={(e) => setInputSleepRating(e.target.value)}
+                                  className="w-full text-[10px] p-1 rounded border border-slate-200 dark:bg-slate-900 text-slate-850 dark:text-white"
+                                >
+                                  <option value="Deep & Restorative">Deep & Restorative</option>
+                                  <option value="Good, calm dreams">Good, calm dreams</option>
+                                  <option value="Light / Incomplete">Light / Incomplete</option>
+                                  <option value="Fragmented sleep pattern">Fragmented sleep pattern</option>
+                                </select>
+                              </div>
+                              <div className="w-16">
+                                <label className="text-[8px] font-bold uppercase text-slate-400 block">Score /100</label>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  max="100"
+                                  value={sleepScore}
+                                  onChange={(e) => setSleepScore(Number(e.target.value))}
+                                  className="w-full text-[10px] p-1 rounded border border-slate-200 dark:bg-slate-900 text-slate-850 dark:text-white"
+                                />
+                              </div>
                             </div>
 
                             <button
                               onClick={() => {
+                                let hrs = 7.5;
+                                try {
+                                  const [bH, bM] = inputBed.split(":").map(Number);
+                                  const [wH, wM] = inputWake.split(":").map(Number);
+                                  hrs = ((wH * 60 + wM) - (bH * 60 + bM + (bH > wH ? -1440 : 0))) / 60;
+                                  if (hrs < 0) hrs += 24;
+                                } catch (e) {}
+
                                 setSleepLog([
                                   {
                                     id: Date.now(),
                                     date: "Today",
                                     bed: inputBed,
                                     wake: inputWake,
-                                    rating: inputSleepRating,
-                                    hours: 7.5
+                                    rating: inputSleepRating + ` (Score: ${sleepScore}/100)`,
+                                    hours: Number(hrs.toFixed(1))
                                   },
                                   ...sleepLog
                                 ]);
                                 setDailyStreakCounter(prev => prev + 1);
-                                triggerAlert("Sleep log added", "Sync complete with local storage caches.", "success");
+                                triggerAlert("Sleep log added", `Recorded ${hrs.toFixed(1)} hrs with score ${sleepScore}`, "success");
                               }}
-                              className="w-full col-span-2 mt-2 py-1.5 bg-indigo-600 text-white rounded text-[10px] font-bold"
+                              className="w-full col-span-2 mt-2 py-1.5 bg-indigo-600 text-white rounded text-[10px] font-bold shadow-md"
                             >
                               Log Sleep Record
                             </button>
@@ -522,24 +608,38 @@ export const HomeScreen = (props: any) => {
                           </h4>
 
                           <div className="grid grid-cols-2 gap-2 mb-3 bg-slate-50 dark:bg-slate-950 p-2.5 border border-slate-100 dark:border-slate-850 rounded-xl text-left">
-                            <div>
-                              <span className="text-[8px] uppercase font-bold text-slate-400 block font-sans">Exercise title</span>
-                              <input 
-                                type="text"
-                                value={inputWorkoutType}
-                                onChange={(e) => setInputWorkoutType(e.target.value)}
-                                className="w-full text-xs p-1 rounded border dark:bg-slate-900 text-slate-800 dark:text-white"
-                                placeholder="eg PushUps"
-                              />
+                            <div className="col-span-2">
+                              <span className="text-[8px] uppercase font-bold text-slate-400 block font-sans">Category</span>
+                              <select
+                                value={inputWorkoutCategory}
+                                onChange={(e) => setInputWorkoutCategory(e.target.value)}
+                                className="w-full text-[10px] p-1 rounded border border-slate-200 dark:border-slate-800 dark:bg-slate-900 text-slate-900 dark:text-white"
+                              >
+                                <option value="Exercise">Standard Exercise</option>
+                                <option value="Yoga">Yoga</option>
+                                <option value="Pilates">Pilates</option>
+                              </select>
                             </div>
-                            <div>
-                              <span className="text-[8px] uppercase font-bold text-slate-400 block">Length mins</span>
-                              <input 
-                                type="number"
-                                value={inputWorkoutMins}
-                                onChange={(e) => setInputWorkoutMins(e.target.value)}
-                                className="w-full text-xs p-1 rounded border dark:bg-slate-900 text-slate-800 dark:text-white"
-                              />
+                            <div className="col-span-2 grid grid-cols-2 gap-2 mt-1">
+                              <div>
+                                <span className="text-[8px] uppercase font-bold text-slate-400 block font-sans">Exercise title</span>
+                                <input 
+                                  type="text"
+                                  value={inputWorkoutType}
+                                  onChange={(e) => setInputWorkoutType(e.target.value)}
+                                  className="w-full text-xs p-1 rounded border dark:bg-slate-900 text-slate-800 dark:text-white"
+                                  placeholder="eg PushUps"
+                                />
+                              </div>
+                              <div>
+                                <span className="text-[8px] uppercase font-bold text-slate-400 block">Length mins</span>
+                                <input 
+                                  type="number"
+                                  value={inputWorkoutMins}
+                                  onChange={(e) => setInputWorkoutMins(e.target.value)}
+                                  className="w-full text-xs p-1 rounded border dark:bg-slate-900 text-slate-800 dark:text-white"
+                                />
+                              </div>
                             </div>
                             <div className="col-span-2">
                               <span className="text-[8px] uppercase font-bold text-slate-400 block">Intensity Select</span>
@@ -560,7 +660,7 @@ export const HomeScreen = (props: any) => {
                                   {
                                     id: Date.now(),
                                     date: "Today",
-                                    type: inputWorkoutType,
+                                    type: `[${inputWorkoutCategory}] ${inputWorkoutType}`,
                                     mins: minVal,
                                     intensity: inputWorkoutIntensity
                                   },
@@ -588,6 +688,41 @@ export const HomeScreen = (props: any) => {
                               </div>
                             ))}
                           </div>
+                        </div>
+
+                        {/* WIDGET 3.5: HEART RATE TRACKER */}
+                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
+                          <h4 className="font-bold text-xs text-slate-800 dark:text-white flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-2.5">
+                            <Heart className="w-4 h-4 text-rose-500" />
+                            Heart Rate Tracker
+                          </h4>
+                          <div className="flex gap-2">
+                             <input 
+                               type="number"
+                               value={heartRate}
+                               onChange={(e) => setHeartRate(Number(e.target.value))}
+                               className="w-16 text-center text-xs p-1 rounded border text-slate-800 dark:text-white bg-white dark:bg-slate-900"
+                             />
+                             <button
+                               onClick={() => {
+                                 const hr = Number(heartRate) || 72;
+                                 setHrHistory([{ id: Date.now(), val: hr, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }, ...hrHistory]);
+                                 triggerAlert("Heart Rate added", `Logged ${hr} BPM.`, "success");
+                               }}
+                               className="flex-1 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg text-[10px]"
+                             >
+                               Log Heart Rate (BPM)
+                             </button>
+                           </div>
+                           {hrHistory.length > 0 && (
+                             <div className="flex gap-2 mt-2 overflow-x-auto text-[10px]">
+                               {hrHistory.map(h => (
+                                 <span key={h.id} className="bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-900 px-2 py-1 rounded shrink-0">
+                                   {h.val} BPM <span className="opacity-50 text-[8px]">{h.time}</span>
+                                 </span>
+                               ))}
+                             </div>
+                           )}
                         </div>
 
                         {/* WIDGET 4: DAILY QUICK WELLNESS STATS */}
@@ -668,10 +803,53 @@ export const HomeScreen = (props: any) => {
                           </div>
                         </div>
 
+                        {/* WIDGET 5: PSYCHOLOGICAL SCORES / 10 */}
+                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4.5 rounded-2xl shadow-sm space-y-3">
+                          <h4 className="font-bold text-xs text-slate-850 dark:text-white flex items-center gap-1.5 pb-1 border-b">
+                            <Brain className="w-4 h-4 text-purple-500" />
+                            Psychological State (1-10)
+                          </h4>
+                          <div className="grid grid-cols-3 gap-2">
+                            <div className="bg-slate-50 dark:bg-slate-950 p-2 text-center rounded border border-slate-100 dark:border-slate-850">
+                              <span className="text-[9px] uppercase font-bold text-slate-400 block mb-1">Mindful</span>
+                              <input 
+                                type="number" min="1" max="10"
+                                value={mindfulnessScore}
+                                onChange={(e) => setMindfulnessScore(Number(e.target.value))}
+                                className="w-10 mx-auto text-center text-xs p-1 rounded border dark:bg-slate-900 border-purple-200 dark:border-purple-900 text-purple-700 dark:text-purple-300 font-bold"
+                              />
+                            </div>
+                            <div className="bg-slate-50 dark:bg-slate-950 p-2 text-center rounded border border-slate-100 dark:border-slate-850">
+                              <span className="text-[9px] uppercase font-bold text-slate-400 block mb-1">Happy</span>
+                              <input 
+                                type="number" min="1" max="10"
+                                value={happinessScore}
+                                onChange={(e) => setHappinessScore(Number(e.target.value))}
+                                className="w-10 mx-auto text-center text-xs p-1 rounded border dark:bg-slate-900 border-amber-200 dark:border-amber-900 text-amber-600 dark:text-amber-400 font-bold"
+                              />
+                            </div>
+                            <div className="bg-slate-50 dark:bg-slate-950 p-2 text-center rounded border border-slate-100 dark:border-slate-850">
+                              <span className="text-[9px] uppercase font-bold text-slate-400 block mb-1">Stress</span>
+                              <input 
+                                type="number" min="1" max="10"
+                                value={stressScore}
+                                onChange={(e) => setStressScore(Number(e.target.value))}
+                                className="w-10 mx-auto text-center text-xs p-1 rounded border dark:bg-slate-900 border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 font-bold"
+                              />
+                            </div>
+                            <button
+                               onClick={() => {
+                                 triggerAlert("Scores Logged", `Mindful: ${mindfulnessScore}/10 | Happy: ${happinessScore}/10 | Stress: ${stressScore}/10`, "success");
+                               }}
+                               className="col-span-3 py-1.5 mt-1 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg text-[10px]"
+                             >
+                               Save Psychological Scores
+                             </button>
+                          </div>
+                        </div>
+
                       </div>
                     )}
-
-
 
                     {/* ==================== TAB 4: AI WELLNESS COACH ==================== */}
                     {phoneTab === "ai-coach" && (
@@ -818,6 +996,58 @@ export const HomeScreen = (props: any) => {
                     )}
 
 
+
+                    {/* ==================== TAB: HABITS TRACKER ==================== */}
+                    {phoneTab === "habits" && (
+                      <div className="flex flex-col gap-4">
+                        <div>
+                          <p className="text-[11px] font-bold text-slate-400">Written by Brian McCarthy</p>
+                          <h3 className="font-extrabold text-lg text-slate-900 dark:text-white leading-tight">Good Habit Tracker</h3>
+                        </div>
+
+                        {/* Habits Checklist */}
+                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4.5 rounded-2xl shadow-sm">
+                          <h4 className="font-bold text-xs text-slate-800 dark:text-white flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2 mb-3">
+                            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-sky-500" /> Daily Habits</span>
+                            <button onClick={() => setActiveScreen("settings-habits")} className="text-[10px] text-blue-600 dark:text-blue-400">Configure</button>
+                          </h4>
+                          <div className="flex flex-col gap-2.5">
+                            {habits?.map((habit: any) => {
+                              const colorMap: Record<string, string> = {
+                                "orange": "bg-orange-500 border-orange-500",
+                                "pink": "bg-pink-500 border-pink-500",
+                                "emerald": "bg-emerald-500 border-emerald-500",
+                                "blue": "bg-blue-500 border-blue-500",
+                                "yellow": "bg-yellow-500 border-yellow-500",
+                                "lime": "bg-lime-500 border-lime-500",
+                                "indigo": "bg-indigo-500 border-indigo-500",
+                                "purple": "bg-purple-500 border-purple-500",
+                                "rose": "bg-rose-500 border-rose-500"
+                              };
+                              const activeColor = colorMap[habit.color] || "bg-blue-500 border-blue-500";
+                              return (
+                              <label key={habit.id} className="flex items-center gap-3 cursor-pointer group">
+                                <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 border-2 transition-colors ${habit.completed ? activeColor : 'border-slate-300 dark:border-slate-600 group-hover:border-slate-400'}`}>
+                                  {habit.completed && <Check className="w-3.5 h-3.5 text-white" />}
+                                </div>
+                                <input 
+                                  type="checkbox" 
+                                  className="hidden" 
+                                  checked={habit.completed}
+                                  onChange={() => {
+                                    setHabits(habits.map((h: any) => h.id === habit.id ? { ...h, completed: !h.completed } : h));
+                                    if (!habit.completed) triggerAlert("Habit completed!", `You completed ${habit.name}. Great job!`, "success");
+                                  }}
+                                />
+                                <span className={`text-sm font-medium transition-all ${habit.completed ? 'text-slate-400 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
+                                  {habit.name}
+                                </span>
+                              </label>
+                            )})}
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     {/* ==================== TAB 5: SYSTEM SETTINGS TABS ==================== */}
                     {phoneTab === "settings" && (
