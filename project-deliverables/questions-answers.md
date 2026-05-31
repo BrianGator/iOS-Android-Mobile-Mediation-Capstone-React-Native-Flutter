@@ -11,32 +11,32 @@ Below is the exhaustive, systematic map addressing all **28 Capstone grading rub
 
 | Rubric ID | Grading Target & Requirement | Github / Code-Behind File Location | Screenshot Name / Evidence Output Method |
 |:---|:---|:---|:---|
-| **R1** | Public GitHub Repository URL | `https://github.com/BrianSMc/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter` | Public Access Configuration (`main` branch) |
+| **R1** | Public GitHub Repository URL | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/` | Public Access Configuration (`main` branch) |
 | **R2** | User Stories Markdown File Link | `/project-deliverables/user-stories.md` | Contains 9 complete user stories in standard Agile format |
 | **R3** | Figma Evidence 1 (Screens 1 to 5) | Shared Workspace Blueprints | `figma-evidence1.png` (Login, Register, Home, Detail, Favorites) |
 | **R4** | Figma Evidence 2 (Screens 6 to 9) | Shared Workspace Settings & API | `figma-evidence2.png` (External API, Settings Menu, Theme Switch, Notify) |
-| **R5** | SignUp Implementation File Link | `src/App.tsx` & `/Cross-Platform-React-Native-TypeScript-Files/BreathingPlayer.tsx` | Contains code representing user sign-up and validation workflows |
+| **R5** | SignUp Implementation File Link | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Contains code representing user sign-up and validation workflows |
 | **R6** | Sign-Up Screen Interactive Layout | `src/App.tsx` (Sign-Up Form Component View) | `signup_screen_evidence.png` (Username, Email, password input, sign up trigger, login link) |
 | **R7** | Sign-Up Validation Error Alert | `src/App.tsx` (Validation Check blocks) | `signup_error.png` (UI trigger alert indicating raw missing parameters) |
-| **R8** | Login Implementation File Link | `src/App.tsx` & `/Cross-Platform-React-Native-TypeScript-Files/BreathingPlayer.tsx` | Contains code compared against local persistent user accounts |
+| **R8** | Login Implementation File Link | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Contains code compared against local persistent user accounts |
 | **R9** | Login Screen Interactive Layout | `src/App.tsx` (Login Form Component View) | `login_screen_evidence.png` (Email, password input, sign-up link, login trigger) |
 | **R10**| Login Authentication Error Alert | `src/App.tsx` (Validation failure traps) | `login_error.png` (Display indicates invalid credential parameters mismatch) |
-| **R11**| Home Screen Implementation File | `src/App.tsx` (Main Portal Grid Layout) | Contains greeting headers, horizontal swipe recommendations |
+| **R11**| Home Screen Implementation File | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Contains greeting headers, horizontal swipe recommendations |
 | **R12**| Home Screen UI Visual Layout | `src/App.tsx` (Home Feed Component View) | `home-screen-evidence.png` (Custom profile header welcome text and header logo) |
-| **R13**| Detail Screen Implementation File | `src/App.tsx` (Session Information Tabs Panel) | Contains specific categories, durations, and dynamic cover art |
+| **R13**| Detail Screen Implementation File | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Contains specific categories, durations, and dynamic cover art |
 | **R14**| Detail Screen Navigation Access | `src/App.tsx` (Home Swipe Cards Grid Row) | `evidence-detail-navigation.png` (Highlights navigation card link click icons) |
 | **R15**| Active Detail View Output Screen | `src/App.tsx` (Detail Panel Interface) | `evidence-detail-screen.png` (Presents descriptions, cover art, and duration) |
-| **R16**| Local Persistence Implementation | `src/App.tsx` (Preferences Key-Value cache) | Leverages client side Storage / AsyncStorage to serialize user lists |
+| **R16**| Local Persistence Implementation | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Leverages client side Storage / AsyncStorage to serialize user lists |
 | **R17**| Client Data Storage Evidence | `src/App.tsx` (Persistent favorites Array) | `evidence-persistence.png` (Outputs the saved state format of favorites) |
 | **R18**| Frontend Persistent Synchronization | `src/App.tsx` (Favorites tab layout) | `evidence-integrateScreen-persistence.png` (Sync status in front end) |
-| **R19**| Asynchronous REST API Code Link | `src/App.tsx` (Asynchronous Fetch routines) | Fetches quote information live from standard third-party REST endpoints |
+| **R19**| Asynchronous REST API Code Link | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Fetches quote information live from standard third-party REST endpoints |
 | **R20**| API Consumption Active Display | `src/App.tsx` (Mindful Daily Quote block) | `evidence-api-ux.png` (Displays quotes successfully retrieved online) |
-| **R21**| Settings Menu Code-Behind Link | `src/App.tsx` (Sidebar / Modal configuration) | Renders links for profiles, theme configurations, notifications |
+| **R21**| Settings Menu Code-Behind Link | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Renders links for profiles, theme configurations, notifications |
 | **R22**| Settings Page Access Menu Icon | `src/App.tsx` (Global Navigation Bar) | `evidence-menu-icon.png` (Shows access gears layout in navigation bar) |
 | **R23**| Settings Active List Option Items | `src/App.tsx` (List container viewports) | `evidence-menu-items.png` (Shows multiple actionable settings cells) |
-| **R24**| Settings Screen Logic Code Link | `src/App.tsx` (Theme toggle and notification states) | Handles the code for themes and background reminders |
+| **R24**| Settings Screen Logic Code Link | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Handles the code for themes and background reminders |
 | **R25**| Settings Page Active Preferences | `src/App.tsx` (Dynamic Theme switcher block) | `evidence-settings-screen.png` (Shows active switches inside Settings) |
-| **R26**| Notification Management File | `src/App.tsx` (Timer trigger threads) | Sets daily background routines and fires mock push alerts |
+| **R26**| Notification Management File | `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` | Sets daily background routines and fires mock push alerts |
 | **R27**| Notification Scheduler Scheduler Setup | `src/App.tsx` (Reminder options selection) | `evidence-notification-configure.png` (Active toggle for system notifications) |
 | **R28**| Successfully Fired Alert Trigger | `src/App.tsx` (Mock smartphone alerts) | `evidence-notification-alert.png` (Shows triggered notification alert dialog banner) |
 
@@ -47,7 +47,7 @@ Below is the exhaustive, systematic map addressing all **28 Capstone grading rub
 ### Deliverable R1 & R2: Repository Visibility and User Stories Documentation
 - **Deliverable Question**: Provide the status of the GitHub Repository and link the document detailing the functional user stories.
 - **Evaluation Answer**: 
-  - **GitHub URL**: `https://github.com/BrianSMc/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter` is configured as a public-facing workspace. It showcases the codebases, directory parameters, and this markdown.
+  - **GitHub URL**: `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/` is configured as a public-facing workspace. It showcases the codebases, directory parameters, and this markdown.
   - **User Stories File**: Located at `/project-deliverables/user-stories.md`. It lists **all nine comprehensive user stories** with structured "As a... I want to... So that..." goals and functional acceptance criteria for signups, logins, headers, detail pages, tabs, favorites mechanisms, theme shifts, and scheduled notifications.
 
 ---
@@ -113,7 +113,7 @@ Below is the exhaustive, systematic map addressing all **28 Capstone grading rub
 ### Deliverable R8 & R9: Login Implementation & Live Screen Capture
 - **Deliverable Question**: Where is login logic handled? Detail the credentials verification script and display formatting.
 - **Evaluation Answer**:
-  - **File Location**: App.tsx / `/Cross-Platform-React-Native-TypeScript-Files/BreathingPlayer.tsx`
+  - **File Location**: `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx`
   - **Export File**: `login_screen_evidence.png`
   - **Login Auth Script**:
     ```typescript
@@ -174,7 +174,7 @@ Below is the exhaustive, systematic map addressing all **28 Capstone grading rub
 ### Deliverable R16, R17 & R18: Favorites persistence & front end integration evidence
 - **Deliverable Question**: Explain where AsyncStorage integration and favorites lists reside, and show the local stores.
 - **Evaluation Answer**:
-  - **File Location**: `src/App.tsx` and React Native files.
+  - **File Location**: `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx`
   - **Export Files**: `evidence-persistence.png` & `evidence-integrateScreen-persistence.png`
   - **Technical Details**:
     - `evidence-persistence.png` renders serialized JSON listings illustrating persistent favorites storage.
@@ -224,7 +224,7 @@ Below is the exhaustive, systematic map addressing all **28 Capstone grading rub
 ### Deliverable R21, R22 & R23: Settings access and items options
 - **Deliverable Question**: Where are menus established, and how does the user navigate to them?
 - **Evaluation Answer**:
-  - **File Location**: `src/App.tsx` (sidebar menu configurations).
+  - **File Location**: `https://github.com/BrianGator/iOS-Android-Mobile-Meditation-Capstone-React-Native-Flutter/blob/main/src/App.tsx` (sidebar menu configurations).
   - **Export Files**: `evidence-menu-icon.png` & `evidence-menu-items.png`
   - **Technical Details**: Shows custom gears/links in navigation bars and lists for themes, notifications, and profile data inside the dashboard.
 

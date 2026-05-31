@@ -902,6 +902,19 @@ export default function App() {
             <p className="text-xs text-slate-400">Practice live: click around, fill inputs, and test variables locally.</p>
           </div>
 
+          <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-sm">
+            <button onClick={() => setActiveScreen("login")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Login</button>
+            <button onClick={handleLogout} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Logout</button>
+            <button onClick={() => setActiveScreen("signup")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Registration</button>
+            <button onClick={() => setActiveScreen("home")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Home</button>
+            <button onClick={() => setActiveScreen("details")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Detail</button>
+            <button onClick={() => setActiveScreen("settings-favourites")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Favorites/Profile</button>
+            <button onClick={fetchRandomQuote} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">External API Integration</button>
+            <button onClick={() => setActiveScreen("settings-menu")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Settings Menu</button>
+            <button onClick={() => setActiveScreen("settings-theme")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Settings Screen</button>
+            <button onClick={() => setActiveScreen("settings-reminders")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Notifications Screen</button>
+          </div>
+
           {/* Virtual Phone Container */}
           <div className="relative w-full max-w-[370px] aspect-[9/18.5] rounded-[44px] border-[10px] border-slate-900 bg-slate-950 shadow-2xl overflow-hidden ring-4 ring-blue-500/10 flex flex-col">
             
@@ -1200,6 +1213,15 @@ export default function App() {
                               className="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 transition-all text-xs font-bold text-white shadow"
                             >
                               {isBreathingActive ? "Pause Respiration" : "Begin Breathing Cycle"}
+                            </button>
+                            <button
+                              onClick={() => {
+                                setActiveDetailsId(1);
+                                setActiveScreen("details");
+                              }}
+                              className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all text-xs font-bold text-white shadow"
+                            >
+                              View Activity
                             </button>
                             {isBreathingActive && (
                               <button
