@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { 
   User, Mail, Lock, Moon, Sun, Smartphone, Download, Check, Sparkles, BookOpen, AlertCircle, Heart, Share2, Compass, Bell, Settings as SettingsIcon, LogOut, Code, FileText, CheckCircle2, ChevronRight, RefreshCw, Layers,
-  Volume2, VolumeX, Play, Pause, Activity, Dumbbell, Smile, Brain, Droplet, Plus, Calendar, Trophy, ChevronLeft, Star
+  Volume2, VolumeX, Play, Pause, Activity, Dumbbell, Smile, Brain, Droplet, Plus, Calendar, Trophy, ChevronLeft, Star, Home
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -13,7 +13,7 @@ import {
 export default function App() {
   // Mobile app simulator states
   const [currentUser, setCurrentUser] = useState<{ userName?: string; email?: string; password?: string } | null>(null);
-  const [activeScreen, setActiveScreen] = useState<"signup" | "login" | "home" | "details" | "settings-menu" | "settings-favourites" | "settings-theme" | "settings-reminders">("signup");
+  const [activeScreen, setActiveScreen] = useState<"signup" | "login" | "home" | "details" | "settings-menu" | "settings-favourites" | "settings-theme" | "settings-reminders" | "settings-api">("signup");
   
   // Prefill sign up & login coordinates to satisfy autolfill guidelines effortlessly
   const [signupUser, setSignupUser] = useState("BrianMcCarthy");
@@ -902,17 +902,28 @@ export default function App() {
             <p className="text-xs text-slate-400">Practice live: click around, fill inputs, and test variables locally.</p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-sm">
-            <button onClick={() => setActiveScreen("login")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Login</button>
-            <button onClick={handleLogout} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Logout</button>
-            <button onClick={() => setActiveScreen("signup")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Registration</button>
-            <button onClick={() => setActiveScreen("home")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Home</button>
-            <button onClick={() => setActiveScreen("details")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Detail</button>
-            <button onClick={() => setActiveScreen("settings-favourites")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Favorites/Profile</button>
-            <button onClick={fetchRandomQuote} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">External API Integration</button>
-            <button onClick={() => setActiveScreen("settings-menu")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Settings Menu</button>
-            <button onClick={() => setActiveScreen("settings-theme")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Settings Screen</button>
-            <button onClick={() => setActiveScreen("settings-reminders")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded">Notifications Screen</button>
+          <div className="flex flex-col items-center gap-3 mb-6 w-full max-w-sm">
+            <div className="w-full">
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block text-center mb-1">Figma 1: Core Screens</span>
+              <div className="flex flex-wrap justify-center gap-1.5">
+                <button onClick={() => setActiveScreen("login")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Login</button>
+                <button onClick={() => setActiveScreen("signup")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Registration</button>
+                <button onClick={() => setActiveScreen("home")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Home</button>
+                <button onClick={() => setActiveScreen("details")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Detail</button>
+                <button onClick={() => setActiveScreen("settings-favourites")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Favorites/Profile</button>
+              </div>
+            </div>
+            
+            <div className="w-full">
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block text-center mb-1">Figma 2: Settings & Integration</span>
+              <div className="flex flex-wrap justify-center gap-1.5">
+                <button onClick={() => { setActiveScreen("settings-api"); fetchRandomQuote(); }} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">External API Integration</button>
+                <button onClick={() => setActiveScreen("settings-menu")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Menu</button>
+                <button onClick={() => setActiveScreen("settings-theme")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Screen</button>
+                <button onClick={() => setActiveScreen("settings-reminders")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Notifications Screen</button>
+                <button onClick={handleLogout} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded text-red-500 font-bold">Logout</button>
+              </div>
+            </div>
           </div>
 
           {/* Virtual Phone Container */}
@@ -1087,10 +1098,17 @@ export default function App() {
                         Login
                       </button>
 
+                      <button 
+                        onClick={() => setActiveScreen("signup")}
+                        className="w-full py-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-bold text-xs text-slate-700 dark:text-slate-300 rounded-lg transition mt-1 outline-none"
+                      >
+                        Sign Up
+                      </button>
+
                       <div className="text-center text-xs mt-2 text-slate-500">
                         Don't have an account?{" "}
                         <button onClick={() => setActiveScreen("signup")} className="text-blue-500 font-bold hover:underline">
-                          Sign Up
+                          Use Sign Up Link
                         </button>
                       </div>
                     </div>
@@ -1106,7 +1124,7 @@ export default function App() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col gap-4 mt-2 pb-16"
                   >
-                    {/* Header Bar */}
+                    {/* Navigation / Header Bar */}
                     <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-900 pb-2.5">
                       <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping" />
@@ -1114,10 +1132,17 @@ export default function App() {
                           MindfulSpace Mobile v2.5
                         </span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-2">
                         <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded">
                           Streak: {dailyStreakCounter} Days 🔥
                         </span>
+                        <button 
+                          onClick={() => setActiveScreen("settings-menu")} 
+                          className="bg-slate-200 dark:bg-slate-800 p-1.5 rounded-full hover:bg-slate-300 dark:hover:bg-slate-700 transition"
+                          title="Settings Menu"
+                        >
+                          <SettingsIcon className="w-3.5 h-3.5 text-slate-700 dark:text-slate-300" />
+                        </button>
                       </div>
                     </div>
 
@@ -1144,95 +1169,21 @@ export default function App() {
                         </div>
 
                         {/* SUBMODULE A: INTERACTIVE CHEST-BREATHING BUBBLE GUIDANCE */}
-                        <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-4 rounded-2xl border border-slate-800 shadow-lg relative overflow-hidden">
+                        <button 
+                          onClick={() => {
+                            setActiveDetailsId(1);
+                            setActiveScreen("details");
+                          }}
+                          className="w-full bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-4 rounded-2xl border border-slate-800 shadow-lg relative overflow-hidden text-left hover:scale-[1.02] transition-transform flex justify-between items-center"
+                        >
                           <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/10 rounded-full blur-xl" />
-                          <div className="flex justify-between items-center mb-2">
-                            <div>
-                              <span className="text-[8px] uppercase font-bold tracking-widest text-blue-400">Zen Pulmonary Respiration Trainer</span>
-                              <h4 className="font-bold text-xs truncate">Interactive Breathing Guideline</h4>
-                            </div>
-                            <span className="text-[10px] font-mono bg-blue-950 px-2 py-0.5 rounded border border-blue-900 text-blue-300">
-                              {BREATH_MODES[activeBreathMode].name}
-                            </span>
+                          <div>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest inline-block mb-1">Featured Exercise</span>
+                            <h4 className="font-extrabold text-sm mb-0.5">Focus Breathing Cycle</h4>
+                            <p className="text-[10px] text-slate-400 line-clamp-1 pr-6">Box breathing to center the mind and relax body tensions.</p>
                           </div>
-
-                          {/* Quick selection tabs */}
-                          <div className="flex gap-1 mb-3">
-                            {BREATH_MODES.map((mode, index) => (
-                              <button
-                                key={index}
-                                onClick={() => {
-                                  setActiveBreathMode(index);
-                                  setIsBreathingActive(false);
-                                }}
-                                className={`flex-1 py-1 text-[9px] rounded font-bold transition-all ${activeBreathMode === index ? "bg-blue-600 text-white" : "bg-slate-950 text-slate-400"}`}
-                              >
-                                {mode.name.split(" ")[0]}
-                              </button>
-                            ))}
-                          </div>
-
-                          {/* Pulsing expand-contract chest circle */}
-                          <div className="flex flex-col items-center justify-center py-6 relative">
-                            <AnimatePresence mode="wait">
-                              <motion.div
-                                key={breathPhase}
-                                animate={{
-                                  scale: isBreathingActive 
-                                    ? (breathPhase === "Inhale" ? 1.6 : breathPhase === "Exhale" ? 1.0 : breathPhase === "Hold" ? 1.6 : 0.95) 
-                                    : 1.0,
-                                  boxShadow: breathPhase === "Inhale" || breathPhase === "Hold"
-                                    ? "0 0 25px rgba(59, 130, 246, 0.4)"
-                                    : "0 0 5px rgba(59, 130, 246, 0.05)"
-                                }}
-                                transition={{
-                                  duration: isBreathingActive 
-                                    ? (breathPhase === "Inhale" ? BREATH_MODES[activeBreathMode].inhale : breathPhase === "Exhale" ? BREATH_MODES[activeBreathMode].exhale : 2) 
-                                    : 1.0,
-                                  ease: "easeInOut"
-                                }}
-                                className={`w-20 h-20 rounded-full bg-gradient-to-br ${BREATH_MODES[activeBreathMode].color} flex flex-col items-center justify-center text-center p-2 relative z-10`}
-                              >
-                                <span className="text-[10px] font-bold text-white uppercase tracking-wider">{breathPhase}</span>
-                                {isBreathingActive && (
-                                  <span className="text-xs font-black text-white font-mono">{breathTimer}s</span>
-                                )}
-                              </motion.div>
-                            </AnimatePresence>
-
-                            {/* Back ring aura */}
-                            <div className="absolute w-24 h-24 rounded-full border border-blue-500/15 animate-[ping_3s_infinite]" />
-                          </div>
-
-                          {/* Control Button */}
-                          <div className="flex gap-2 items-center">
-                            <button
-                              onClick={() => {
-                                setIsBreathingActive(!isBreathingActive);
-                              }}
-                              className="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 transition-all text-xs font-bold text-white shadow"
-                            >
-                              {isBreathingActive ? "Pause Respiration" : "Begin Breathing Cycle"}
-                            </button>
-                            <button
-                              onClick={() => {
-                                setActiveDetailsId(1);
-                                setActiveScreen("details");
-                              }}
-                              className="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all text-xs font-bold text-white shadow"
-                            >
-                              View Activity
-                            </button>
-                            {isBreathingActive && (
-                              <button
-                                onClick={() => setIsBreathingActive(false)}
-                                className="px-3 py-2 bg-slate-950 hover:bg-slate-900 rounded-xl text-xs font-bold text-slate-400"
-                              >
-                                Reset
-                              </button>
-                            )}
-                          </div>
-                        </div>
+                          <ChevronRight className="w-5 h-5 text-slate-500 shrink-0 relative z-10" />
+                        </button>
 
                         {/* SUBMODULE B: BEDTIME PEACEFUL SOUNDSCAPE RECREATIONAL CONTROLS */}
                         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
@@ -2025,12 +1976,12 @@ export default function App() {
                   >
                     {/* Header Nav bar */}
                     <div className="flex justify-between items-center">
-                      <button onClick={() => setActiveScreen("home")} className="text-xs text-blue-600 font-bold flex items-center gap-1">
-                        ← Back Feed
+                      <button onClick={() => setActiveScreen("home")} className="text-xs text-blue-600 font-bold flex items-center gap-1.5 p-1 -ml-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <Home className="w-3.5 h-3.5" /> Back Feed
                       </button>
                       <button 
                         onClick={() => triggerAlert("Shared", `Invitation sent successfully to your device for: ${activeMeditation.title}`, "success")}
-                        className="p-1 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded"
+                        className="p-1.5 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 rounded hover:bg-slate-200 dark:hover:bg-slate-800 transition"
                       >
                         <Share2 className="w-4 h-4" />
                       </button>
@@ -2329,6 +2280,29 @@ export default function App() {
                       </button>
                     </div>
 
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex justify-between items-center shadow-sm">
+                      <div>
+                        <span className="font-bold text-xs block text-slate-900 dark:text-white">Accessibility Features</span>
+                        <span className="text-[10px] text-slate-400">High contrast & dyslexic fonts</span>
+                      </div>
+                      <button 
+                        className="w-11 h-6 rounded-full p-0.5 transition bg-slate-300 dark:bg-slate-700"
+                        onClick={() => triggerAlert("Settings", "Accessibility options activated.", "success")}
+                      >
+                        <div className="w-5 h-5 bg-white rounded-full shadow transition-transform" />
+                      </button>
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex justify-between items-center shadow-sm relative overflow-hidden">
+                      <div className="absolute right-0 top-0 bottom-0 pr-4 flex items-center">
+                        <ChevronRight className="w-4 h-4 text-slate-400" />
+                      </div>
+                      <div>
+                        <span className="font-bold text-xs block text-slate-900 dark:text-white">Account Privacy</span>
+                        <span className="text-[10px] text-slate-400">Manage data sharing preferences</span>
+                      </div>
+                    </div>
+
                     <div className="text-[11px] text-slate-400 p-2.5 bg-slate-50 dark:bg-slate-900 rounded-lg">
                       <p className="line-height-relaxed font-mono">React ThemeProvider Context triggers deep repaint stylesheet states instantaneously across all screens.</p>
                     </div>
@@ -2414,6 +2388,26 @@ export default function App() {
                       </button>
                     </div>
 
+                    <div className="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 flex justify-between items-center shadow-sm">
+                      <div>
+                        <span className="font-bold text-xs block text-slate-900 dark:text-white">Weekly Email Summaries</span>
+                        <span className="text-[10px] text-slate-400">Progress and stats via email</span>
+                      </div>
+                      <button className="w-11 h-6 rounded-full p-0.5 transition bg-blue-600">
+                        <div className="w-5 h-5 bg-white rounded-full shadow transition-transform translate-x-5" />
+                      </button>
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 flex justify-between items-center shadow-sm">
+                      <div>
+                        <span className="font-bold text-xs block text-slate-900 dark:text-white">Community Highlights</span>
+                        <span className="text-[10px] text-slate-400">Top shared sessions from users</span>
+                      </div>
+                      <button className="w-11 h-6 rounded-full p-0.5 transition bg-slate-300 dark:bg-slate-700">
+                        <div className="w-5 h-5 bg-white rounded-full shadow transition-transform" />
+                      </button>
+                    </div>
+
                     <p className="text-[10px] text-slate-400 bg-slate-50 dark:bg-slate-950 p-2.5 rounded border border-blue-100/10 dark:border-slate-800">
                       Configure local clocks to distribute breathing push updates. Tap button below to test immediate push!
                     </p>
@@ -2427,7 +2421,80 @@ export default function App() {
                   </motion.div>
                 )}
 
+                {/* 5D. SETTINGS - EXTERNAL API DETAILS */}
+                {activeScreen === "settings-api" && (
+                  <motion.div 
+                    key="settings-api"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col gap-4 mt-2"
+                  >
+                    <div className="flex justify-between items-center">
+                      <button onClick={() => setActiveScreen("home")} className="text-xs text-blue-600 font-bold">
+                        ← Home
+                      </button>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">External API</h4>
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-xl shadow-sm">
+                      <h3 className="font-bold text-sm mb-2 text-slate-800 dark:text-white">API Integration Details</h3>
+                      
+                      <button 
+                        onClick={fetchRandomQuote}
+                        disabled={isQuoteLoading}
+                        className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow-sm mb-4 disabled:opacity-50 transition"
+                      >
+                        {isQuoteLoading ? "Fetching..." : "Fetch New Insight"}
+                      </button>
+
+                      <div className="p-3 bg-slate-50 dark:bg-slate-950 rounded-lg whitespace-pre-wrap text-xs text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 italic relative">
+                        {isQuoteLoading ? "Waiting for payload..." : `"${randomQuote}"`}
+                        {!isQuoteLoading && (
+                          <div className="absolute top-2 right-2 text-[8px] font-bold text-slate-400 uppercase tracking-widest bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                            JSON DATA
+                          </div>
+                        )}
+                      </div>
+
+                      {!isQuoteLoading && (
+                        <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg text-[10px] font-bold border border-green-200 dark:border-green-800 flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 shrink-0" />
+                          <span className="flex-1">External REST API call successfully parsed and integrated securely.</span>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+
               </AnimatePresence>
+
+              {/* Dev Quick Links Menu inside App */}
+              <div className="mt-8 mb-4 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 text-center">App Map Navigation</h4>
+                <div className="flex flex-col gap-2">
+                  <div>
+                    <span className="text-[8px] text-slate-500 font-bold uppercase tracking-wider block text-center mb-1">Figma 1: Core Screens</span>
+                    <div className="flex flex-wrap justify-center gap-1.5">
+                      <button onClick={() => setActiveScreen("login")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Login</button>
+                      <button onClick={() => setActiveScreen("signup")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Registration</button>
+                      <button onClick={() => setActiveScreen("home")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Home</button>
+                      <button onClick={() => { setActiveDetailsId(1); setActiveScreen("details"); }} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Detail</button>
+                      <button onClick={() => setActiveScreen("settings-favourites")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Favorites/Profile</button>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-[8px] text-slate-500 font-bold uppercase tracking-wider block text-center mb-1">Figma 2: Settings & Integration</span>
+                    <div className="flex flex-wrap justify-center gap-1.5">
+                      <button onClick={() => { setActiveScreen("settings-api"); fetchRandomQuote(); }} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">External API Integration</button>
+                      <button onClick={() => setActiveScreen("settings-menu")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Menu</button>
+                      <button onClick={() => setActiveScreen("settings-theme")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Screen</button>
+                      <button onClick={() => setActiveScreen("settings-reminders")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Notifications Screen</button>
+                      <button onClick={handleLogout} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded text-red-500 font-bold">Logout</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Simulated alert popup */}
