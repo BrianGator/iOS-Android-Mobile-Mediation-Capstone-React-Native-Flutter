@@ -1,0 +1,6 @@
+{
+  "name": "iOS-Android-Mobile-Mediation-Capstone-React-Native-Flutter",
+  "description": "Interactive mobile meditation application capstone simulation environment and documentation manager, authored by Brian McCarthy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
