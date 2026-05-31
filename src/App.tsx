@@ -22,6 +22,7 @@ import { SettingsMenuScreen } from './SettingsMenuScreen';
 import { SettingsThemeScreen } from './SettingsThemeScreen';
 import { SettingsFavouritesScreen } from './SettingsFavouritesScreen';
 import { SettingsRemindersScreen } from './SettingsRemindersScreen';
+import { NotificationAlert } from './NotificationAlert';
 export default function App() {
   // Mobile app simulator states
   const [currentUser, setCurrentUser] = useState<{ userName?: string; email?: string; password?: string } | null>(null);
@@ -1192,22 +1193,7 @@ export default function App() {
             </div>
 
             {/* Simulated alert popup */}
-            <AnimatePresence>
-              {simulatedAlert && (
-                <motion.div 
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 50, opacity: 0 }}
-                  className="absolute bottom-16 inset-x-3 p-3 bg-slate-900 rounded-xl border border-slate-800 text-white z-40 flex items-start gap-2 shadow-xl"
-                >
-                  <AlertCircle className={`w-4 h-4 mt-0.5 shrink-0 ${simulatedAlert.type === "success" ? "text-emerald-400" : simulatedAlert.type === "error" ? "text-red-400" : "text-amber-400"}`} />
-                  <div>
-                    <h5 className="font-bold text-xs">{simulatedAlert.title}</h5>
-                    <p className="text-[10px] text-slate-300">{simulatedAlert.desc}</p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <NotificationAlert simulatedAlert={simulatedAlert} />
 
             {/* Virtual Device Home Bar Indicator button */}
             <div className="absolute bottom-1 w-full flex justify-center py-1">
@@ -1544,7 +1530,7 @@ class ThemeNotifier extends ChangeNotifier {
                     },
                     {
                       q: "5. What are the updated full URLs for the project deliverables for all the latest files added?",
-                      a: "The project deliverables have been segmented into the following modules:\n- Login Screen: /src/LoginScreen.tsx\n- Signup Screen: /src/SignupScreen.tsx\n- Home Screen: /src/HomeScreen.tsx\n- Detail Screen: /src/DetailScreen.tsx\n- Settings Menu Screen: /src/SettingsMenuScreen.tsx\n- Settings Theme Screen: /src/SettingsThemeScreen.tsx\n- Settings Favorites Screen: /src/SettingsFavouritesScreen.tsx\n- Settings Reminders Screen: /src/SettingsRemindersScreen.tsx\n- API Integration Screen: /src/ApiIntegrationScreen.tsx\n- Local Storage Screen: /src/LocalStorageScreen.tsx\n- App Storage Screen: /src/AppStorageScreen.tsx\n\nThe full deployment URLs for the app are:\nDevelopment URL: https://ais-dev-hzsdrbnurhmofpcbth6mjb-494688611919.us-west2.run.app\nShared URL: https://ais-pre-hzsdrbnurhmofpcbth6mjb-494688611919.us-west2.run.app"
+                      a: "The project deliverables have been segmented into the following modules:\n- Login Screen: /src/LoginScreen.tsx\n- Signup Screen: /src/SignupScreen.tsx\n- Home Screen: /src/HomeScreen.tsx\n- Detail Screen: /src/DetailScreen.tsx\n- Settings Menu Screen: /src/SettingsMenuScreen.tsx\n- Settings Theme Screen: /src/SettingsThemeScreen.tsx\n- Settings Favorites Screen: /src/SettingsFavouritesScreen.tsx\n- Settings Reminders Screen: /src/SettingsRemindersScreen.tsx\n- Notification Alert: /src/NotificationAlert.tsx\n- API Integration Screen: /src/ApiIntegrationScreen.tsx\n- Local Storage Screen: /src/LocalStorageScreen.tsx\n- App Storage Screen: /src/AppStorageScreen.tsx\n\nThe full deployment URLs for the app are:\nDevelopment URL: https://ais-dev-hzsdrbnurhmofpcbth6mjb-494688611919.us-west2.run.app\nShared URL: https://ais-pre-hzsdrbnurhmofpcbth6mjb-494688611919.us-west2.run.app"
                     }
                   ].map((deliv, idx) => (
                     <div key={idx} className="border border-slate-100 dark:border-slate-800/80 p-5 rounded-2xl bg-white dark:bg-slate-950 shadow-sm font-sans">
