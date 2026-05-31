@@ -966,9 +966,26 @@ export default function App() {
             {/* Virtual Device Output Frame Screen */}
             <div className={`flex-1 p-5 pt-10 pb-12 overflow-y-auto overflow-x-hidden relative transition-colors ${isDarkMode ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"}`}>
               
+              {/* App Header Graphic */}
+              <div className="mb-4 bg-gradient-to-br from-blue-900 to-indigo-900 rounded-2xl p-4 shadow-lg flex flex-col items-center justify-center text-center border border-indigo-700/50 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl" />
+                <div className="flex gap-3 text-white/90 mb-2 relative z-10">
+                  <Brain className="w-5 h-5 drop-shadow-md" />
+                  <Heart className="w-5 h-5 drop-shadow-md" />
+                  <Moon className="w-5 h-5 drop-shadow-md" />
+                  <Smile className="w-5 h-5 drop-shadow-md" />
+                  <Activity className="w-5 h-5 drop-shadow-md" />
+                </div>
+                <h1 className="text-lg font-black text-white tracking-tight drop-shadow-sm relative z-10">MindfulSpace</h1>
+                <div className="flex items-center gap-1.5 mt-1 relative z-10">
+                  <span className="bg-blue-500/30 text-blue-100 text-[9px] font-extrabold px-2 py-0.5 rounded border border-blue-400/30 shadow-inner tracking-widest uppercase">Mobile v2.5</span>
+                </div>
+              </div>
+
               {/* SCREEN Router Logic */}
               <AnimatePresence mode="wait">
                 
+                {/* sign-up screen */}
                 {/* 1. SIGNUP SCREEN */}
                 {activeScreen === "signup" && (
                   <motion.div 
@@ -1046,6 +1063,7 @@ export default function App() {
                   </motion.div>
                 )}
 
+                {/* login screen */}
                 {/* 2. LOGIN SCREEN */}
                 {activeScreen === "login" && (
                   <motion.div 
@@ -1115,6 +1133,7 @@ export default function App() {
                   </motion.div>
                 )}
 
+                {/* home screen */}
                 {/* 3. HOME MODULE HUB (WITH 5-TAB BOTTOM BAR ROUTER) */}
                 {activeScreen === "home" && (
                   <motion.div 
@@ -1965,6 +1984,7 @@ export default function App() {
                   </motion.div>
                 )}
 
+                {/* detail screen */}
                 {/* 4. MEDITATION DETAILS SCREEN */}
                 {activeScreen === "details" && (
                   <motion.div 
@@ -2181,6 +2201,7 @@ export default function App() {
                   </motion.div>
                 )}
 
+                {/* settings screen */}
                 {/* 5. SETTINGS OPTIONS MENU */}
                 {activeScreen === "settings-menu" && (
                   <motion.div 
@@ -2421,6 +2442,7 @@ export default function App() {
                   </motion.div>
                 )}
 
+                {/* api integration screen */}
                 {/* 5D. SETTINGS - EXTERNAL API DETAILS */}
                 {activeScreen === "settings-api" && (
                   <motion.div 
