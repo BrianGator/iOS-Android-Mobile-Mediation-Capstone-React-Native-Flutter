@@ -2081,53 +2081,99 @@ export default function App() {
                           <motion.div 
                             animate={{ y: [0, 180, 0] }}
                             transition={{ duration: 4.8, repeat: Infinity, ease: "linear" }}
-                            className="absolute inset-x-0 h-0.5 bg-cyan-400/80 shadow-[0_0_10px_#22d3ee] z-20"
+                            className="absolute inset-x-0 h-0.5 bg-cyan-400/80 shadow-[0_0_10px_#22d3ee] z-20 pointer-events-none"
                           />
                           
-                          {/* Modern SVG silhouette */}
-                          <svg viewBox="0 0 100 200" className="w-18 h-40 text-slate-755 dark:text-slate-700 drop-shadow-[0_0_15px_rgba(59,130,246,0.15)] opacity-90 fill-current relative z-10 text-slate-700">
-                            <path d="M50,15 A6,6 0 1 1 50,3 A6,6 0 1 1 50,15 M44,24 L56,24 Q57,35 55,48 L55,85 A4,4 0 0 1 51,89 L49,89 A4,4 0 0 1 45,85 L45,48 Q43,35 44,24 Z" />
-                            <path d="M42,24 Q36,24 33,35 L26,75 Q24,80 27,82 L30,79 L31,50 L34,50" />
-                            <path d="M58,24 Q64,24 67,35 L74,75 Q76,80 73,82 L70,79 L69,50 L66,50" />
-                            <path d="M45,85 L44,145 A4,4 0 0 1 40,149 L38,149 A4,4 0 0 1 34,145 L38,92" />
-                            <path d="M55,85 L56,145 A4,4 0 0 1 60,149 L62,149 A4,4 0 0 1 66,145 L62,92" />
-                          </svg>
+                          {/* Modern SVG silhouette with exact responsive layout container representation */}
+                          <div id="body-scan-graphic-wrapper" className="relative w-24 h-40 flex items-center justify-center">
+                            <svg viewBox="0 0 100 200" className="w-full h-full text-blue-500/80 transition-colors duration-300 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)] relative z-10">
+                              {/* Glowing Outline Silhouette */}
+                              <g fill="rgba(37, 99, 235, 0.08)" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                {/* Head */}
+                                <circle cx="50" cy="25" r="9" />
+                                {/* Neck */}
+                                <rect x="47.5" y="34" width="5" height="6" rx="1.5" />
+                                {/* Torso & Shoulders */}
+                                <path d="M35,44 C35,44 42,40 50,40 C58,40 65,44 65,44 C67.5,45 68,47 68,49.5 L65.5,94 C65.5,96.5 62.5,98.5 59.5,98.5 L40.5,98.5 C37.5,98.5 34.5,96.5 34.5,94 L32,49.5 C32,47 32.5,45 35,44 Z" />
+                                {/* Arms */}
+                                <path d="M32,47 L21,79 C20,82 23,84 25,82 L33.5,54" />
+                                <path d="M68,47 L79,79 C80,82 77,84 75,82 L66.5,54" />
+                                {/* Legs */}
+                                <path d="M39.5,100 L34,158 C33,162 37,164 39,164 L43,164 L44.5,106" />
+                                <path d="M60.5,100 L66,158 C67,162 63,164 61,164 L57,164 L55.5,106" />
+                              </g>
 
-                          {/* Absolute clickable nodes */}
-                          <button 
-                            onClick={() => setSelectedBodyScanNode("Head")}
-                            className={`absolute top-6 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center ${selectedBodyScanNode === "Head" ? "bg-blue-500 border-white scale-125 shadow-[0_0_8px_#3b82f6]" : "bg-slate-900 border-blue-500 hover:scale-125"}`}
-                          >
-                            <span className="w-1 h-1 bg-white rounded-full" />
-                          </button>
+                              {/* Energy Meridian Central Axis (Spine Channel) */}
+                              <line x1="50" y1="34" x2="50" y2="100" stroke="#06b6d4" strokeWidth="1" strokeDasharray="3,3" opacity="0.75" />
+                              
+                              {/* Thoracic Breathing Coordinate Rib Lines */}
+                              <line x1="41" y1="54" x2="59" y2="54" stroke="#3b82f6" strokeWidth="0.75" opacity="0.45" />
+                              <line x1="39" y1="64" x2="61" y2="64" stroke="#3b82f6" strokeWidth="0.75" opacity="0.45" />
+                              <line x1="38" y1="74" x2="62" y2="74" stroke="#3b82f6" strokeWidth="0.75" opacity="0.45" />
+                              <line x1="40" y1="84" x2="60" y2="84" stroke="#3b82f6" strokeWidth="0.75" opacity="0.45" />
+                              
+                              {/* Joint Node Anchors for Sensory Visuals */}
+                              <circle cx="50" cy="54" r="1.5" fill="#3b82f6" opacity="0.6" />
+                              <circle cx="50" cy="74" r="1.5" fill="#3b82f6" opacity="0.6" />
+                              <circle cx="50" cy="88" r="1.5" fill="#3b82f6" opacity="0.6" />
+                            </svg>
 
-                          <button 
-                            onClick={() => setSelectedBodyScanNode("Shoulders")}
-                            className={`absolute top-12 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center ${selectedBodyScanNode === "Shoulders" ? "bg-blue-500 border-white scale-125 shadow-[0_0_8px_#3b82f6]" : "bg-slate-900 border-blue-500 hover:scale-125"}`}
-                          >
-                            <span className="w-1 h-1 bg-white rounded-full" />
-                          </button>
+                            {/* Absolute clickable nodes precisely mapping standard anatomies */}
+                            <button 
+                              id="body-node-head"
+                              onClick={() => setSelectedBodyScanNode("Head")}
+                              className={`absolute top-[12.5%] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center cursor-pointer ${selectedBodyScanNode === "Head" ? "bg-cyan-400 border-white scale-125 shadow-[0_0_10px_#22d3ee]" : "bg-slate-900 border-cyan-500 hover:scale-125"}`}
+                            >
+                              <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                              {selectedBodyScanNode === "Head" && (
+                                <span className="absolute -inset-3.5 rounded-full bg-cyan-400/20 animate-ping pointer-events-none" />
+                              )}
+                            </button>
 
-                          <button 
-                            onClick={() => setSelectedBodyScanNode("Spine")}
-                            className={`absolute top-22 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center ${selectedBodyScanNode === "Spine" ? "bg-blue-500 border-white scale-125 shadow-[0_0_8px_#3b82f6]" : "bg-slate-900 border-blue-500 hover:scale-125"}`}
-                          >
-                            <span className="w-1 h-1 bg-white rounded-full" />
-                          </button>
+                            <button 
+                              id="body-node-shoulders"
+                              onClick={() => setSelectedBodyScanNode("Shoulders")}
+                              className={`absolute top-[22.5%] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center cursor-pointer ${selectedBodyScanNode === "Shoulders" ? "bg-cyan-400 border-white scale-125 shadow-[0_0_10px_#22d3ee]" : "bg-slate-900 border-cyan-500 hover:scale-125"}`}
+                            >
+                              <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                              {selectedBodyScanNode === "Shoulders" && (
+                                <span className="absolute -inset-3.5 rounded-full bg-cyan-400/20 animate-ping pointer-events-none" />
+                              )}
+                            </button>
 
-                          <button 
-                            onClick={() => setSelectedBodyScanNode("Abdomen")}
-                            className={`absolute top-28 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center ${selectedBodyScanNode === "Abdomen" ? "bg-blue-500 border-white scale-125 shadow-[0_0_8px_#3b82f6]" : "bg-slate-900 border-blue-500 hover:scale-125"}`}
-                          >
-                            <span className="w-1 h-1 bg-white rounded-full" />
-                          </button>
+                            <button 
+                              id="body-node-spine"
+                              onClick={() => setSelectedBodyScanNode("Spine")}
+                              className={`absolute top-[36.25%] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center cursor-pointer ${selectedBodyScanNode === "Spine" ? "bg-cyan-400 border-white scale-125 shadow-[0_0_10px_#22d3ee]" : "bg-slate-900 border-cyan-500 hover:scale-125"}`}
+                            >
+                              <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                              {selectedBodyScanNode === "Spine" && (
+                                <span className="absolute -inset-3.5 rounded-full bg-cyan-400/20 animate-ping pointer-events-none" />
+                              )}
+                            </button>
 
-                          <button 
-                            onClick={() => setSelectedBodyScanNode("Legs")}
-                            className={`absolute top-36 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center ${selectedBodyScanNode === "Legs" ? "bg-blue-500 border-white scale-125 shadow-[0_0_8px_#3b82f6]" : "bg-slate-900 border-blue-500 hover:scale-125"}`}
-                          >
-                            <span className="w-1 h-1 bg-white rounded-full" />
-                          </button>
+                            <button 
+                              id="body-node-abdomen"
+                              onClick={() => setSelectedBodyScanNode("Abdomen")}
+                              className={`absolute top-[47.5%] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center cursor-pointer ${selectedBodyScanNode === "Abdomen" ? "bg-cyan-400 border-white scale-125 shadow-[0_0_10px_#22d3ee]" : "bg-slate-900 border-cyan-500 hover:scale-125"}`}
+                            >
+                              <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                              {selectedBodyScanNode === "Abdomen" && (
+                                <span className="absolute -inset-3.5 rounded-full bg-cyan-400/20 animate-ping pointer-events-none" />
+                              )}
+                            </button>
+
+                            <button 
+                              id="body-node-legs"
+                              onClick={() => setSelectedBodyScanNode("Legs")}
+                              className={`absolute top-[67.5%] left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 transition z-30 flex items-center justify-center cursor-pointer ${selectedBodyScanNode === "Legs" ? "bg-cyan-400 border-white scale-125 shadow-[0_0_10px_#22d3ee]" : "bg-slate-900 border-cyan-500 hover:scale-125"}`}
+                            >
+                              <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                              {selectedBodyScanNode === "Legs" && (
+                                <span className="absolute -inset-3.5 rounded-full bg-cyan-400/20 animate-ping pointer-events-none" />
+                              )}
+                            </button>
+                          </div>
                         </div>
 
                         {/* Detailed sensory guideline */}

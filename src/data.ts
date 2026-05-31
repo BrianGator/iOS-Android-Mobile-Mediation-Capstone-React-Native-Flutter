@@ -32,7 +32,7 @@ export const MOCK_MEDITATIONS: Meditation[] = [
     title: "Deep Sleep Body Scan",
     target: "Sleep Quality",
     duration: "15 mins",
-    image: "https://images.unsplash.com/photo-1511295742364-92767fa62d9f?auto=format&fit=crop&q=80&w=500",
+    image: "https://images.unsplash.com/photo-1445905595283-21f8ae8a33d2?auto=format&fit=crop&q=80&w=500",
     shortDescription: "Soothing progressive relaxation that releases somatic body tension to prepare the mind for deep sleep.",
     description: "A gentle progressive relaxation exercise targeted to scan physical tension points throughout the body, calm your central nervous system, and smoothly guide your consciousness into deep, restorative sleep.",
     instructions: [
