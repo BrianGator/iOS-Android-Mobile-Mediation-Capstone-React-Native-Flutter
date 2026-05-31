@@ -30,8 +30,10 @@ export const DetailScreen = (props: any) => {
     aiFocus, setAiFocus, aiStressLevel, setAiStressLevel, aiEnergyLevel, setAiEnergyLevel, aiCustomResults, setAiCustomResults, isAiGenerating, setIsAiGenerating,
     selectedBodyScanNode, setSelectedBodyScanNode, scanPulseActive, setScanPulseActive,
     selectedDocsTab, setSelectedDocsTab, activeCodeFile, setActiveCodeFile, selectedScreenshotName, setSelectedScreenshotName,
-    handleSignup, handleLogin, handleRegister, triggerAlert, fetchRandomQuote, toggleFavorite, toggleTheme, toggleNotifications, handleAiSubmit, handleLogout
+    handleLogin, handleRegister, triggerAlert, fetchRandomQuote, toggleFavorite, handleLogout, handleGenerateAiRecommendation
   } = props;
+
+  const activeMeditation = MOCK_MEDITATIONS.find(m => m.id === activeDetailsId) || MOCK_MEDITATIONS[0];
   
   return (
     <>
