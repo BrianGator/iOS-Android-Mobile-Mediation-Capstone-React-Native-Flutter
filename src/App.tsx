@@ -9,11 +9,14 @@ import {
   MOCK_MEDITATIONS, CODE_FILES, Meditation,
   YOGA_GUIDE, PILATES_GUIDE, EXERCISE_GUIDE, CELEB_SLEEP_STORIES, BEDTIME_SOUNDS, SOOTHING_SOUNDSCAPES
 } from "./data";
+import { LocalStorageScreen } from "./LocalStorageScreen";
+import { AppStorageScreen } from "./AppStorageScreen";
+import { ApiIntegrationScreen } from "./ApiIntegrationScreen";
 
 export default function App() {
   // Mobile app simulator states
   const [currentUser, setCurrentUser] = useState<{ userName?: string; email?: string; password?: string } | null>(null);
-  const [activeScreen, setActiveScreen] = useState<"signup" | "login" | "home" | "details" | "settings-menu" | "settings-favourites" | "settings-theme" | "settings-reminders" | "settings-api">("signup");
+  const [activeScreen, setActiveScreen] = useState<"signup" | "login" | "home" | "details" | "settings-menu" | "settings-favourites" | "settings-theme" | "settings-reminders" | "settings-api" | "storage-local" | "storage-app">("signup");
   
   // Prefill sign up & login coordinates to satisfy autolfill guidelines effortlessly
   const [signupUser, setSignupUser] = useState("BrianMcCarthy");
@@ -921,6 +924,8 @@ export default function App() {
                 <button onClick={() => setActiveScreen("settings-menu")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Menu</button>
                 <button onClick={() => setActiveScreen("settings-theme")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Screen</button>
                 <button onClick={() => setActiveScreen("settings-reminders")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Notifications Screen</button>
+                <button onClick={() => setActiveScreen("storage-local")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Local Storage</button>
+                <button onClick={() => setActiveScreen("storage-app")} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">App Storage</button>
                 <button onClick={handleLogout} className="text-[10px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded text-red-500 font-bold">Logout</button>
               </div>
             </div>
@@ -2445,48 +2450,56 @@ export default function App() {
                 {/* api integration screen */}
                 {/* 5D. SETTINGS - EXTERNAL API DETAILS */}
                 {activeScreen === "settings-api" && (
-                  <motion.div 
-                    key="settings-api"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex flex-col gap-4 mt-2"
-                  >
-                    <div className="flex justify-between items-center">
-                      <button onClick={() => setActiveScreen("home")} className="text-xs text-blue-600 font-bold">
-                        ← Home
-                      </button>
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">External API</h4>
-                    </div>
+                  <ApiIntegrationScreen 
+                    setActiveScreen={setActiveScreen} 
+                    fetchRandomQuote={fetchRandomQuote} 
+                    isQuoteLoading={isQuoteLoading} 
+                    randomQuote={randomQuote} 
+                  />
+                )}
 
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-xl shadow-sm">
-                      <h3 className="font-bold text-sm mb-2 text-slate-800 dark:text-white">API Integration Details</h3>
-                      
-                      <button 
-                        onClick={fetchRandomQuote}
-                        disabled={isQuoteLoading}
-                        className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow-sm mb-4 disabled:opacity-50 transition"
-                      >
-                        {isQuoteLoading ? "Fetching..." : "Fetch New Insight"}
-                      </button>
+                {/* 6A. STORAGE - LOCAL STORAGE */}
+                {activeScreen === "storage-local" && (
+                  <LocalStorageScreen 
+                    setActiveScreen={setActiveScreen} 
+                    localData={["userDetails", "favorites"].reduce((acc: any, key) => {
+                      const val = localStorage.getItem(key);
+                      if (val) {
+                        try {
+                          acc[key] = JSON.parse(val);
+                        } catch (e) {
+                          acc[key] = val;
+                        }
+                      }
+                      return acc;
+                    }, {})} 
+                  />
+                )}
 
-                      <div className="p-3 bg-slate-50 dark:bg-slate-950 rounded-lg whitespace-pre-wrap text-xs text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 italic relative">
-                        {isQuoteLoading ? "Waiting for payload..." : `"${randomQuote}"`}
-                        {!isQuoteLoading && (
-                          <div className="absolute top-2 right-2 text-[8px] font-bold text-slate-400 uppercase tracking-widest bg-slate-200 dark:bg-slate-800 px-1.5 py-0.5 rounded">
-                            JSON DATA
-                          </div>
-                        )}
-                      </div>
-
-                      {!isQuoteLoading && (
-                        <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg text-[10px] font-bold border border-green-200 dark:border-green-800 flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 shrink-0" />
-                          <span className="flex-1">External REST API call successfully parsed and integrated securely.</span>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
+                {/* 6B. STORAGE - APP STORAGE */}
+                {activeScreen === "storage-app" && (
+                  <AppStorageScreen 
+                    setActiveScreen={setActiveScreen} 
+                    appState={{
+                      currentUser,
+                      isDarkMode,
+                      isNotificationEnabled,
+                      activeScreen,
+                      activeDetailsId,
+                      favorites
+                    }}
+                    localData={["userDetails", "favorites"].reduce((acc: any, key) => {
+                      const val = localStorage.getItem(key);
+                      if (val) {
+                        try {
+                          acc[key] = JSON.parse(val);
+                        } catch (e) {
+                          acc[key] = val;
+                        }
+                      }
+                      return acc;
+                    }, {})} 
+                  />
                 )}
 
               </AnimatePresence>
@@ -2512,6 +2525,8 @@ export default function App() {
                       <button onClick={() => setActiveScreen("settings-menu")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Menu</button>
                       <button onClick={() => setActiveScreen("settings-theme")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Settings Screen</button>
                       <button onClick={() => setActiveScreen("settings-reminders")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Notifications Screen</button>
+                      <button onClick={() => setActiveScreen("storage-local")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">Local Storage</button>
+                      <button onClick={() => setActiveScreen("storage-app")} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded">App Storage</button>
                       <button onClick={handleLogout} className="text-[9px] px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition rounded text-red-500 font-bold">Logout</button>
                     </div>
                   </div>
@@ -2869,11 +2884,15 @@ class ThemeNotifier extends ChangeNotifier {
                     {
                       q: "4. How is Dark-Light switching managed in Settings changes?",
                       a: "A global ThemeContext Provider holds state indexes globally. Sliders globally invert CSS parameters instantaneously upon context notification callbacks."
+                    },
+                    {
+                      q: "5. What are the updated full URLs for the project deliverables for all the latest files added?",
+                      a: "The project deliverables have been segmented into the following modules:\n- Login Screen: /src/LoginScreen.tsx\n- Signup Screen: /src/SignupScreen.tsx\n- Home Screen: /src/HomeScreen.tsx\n- Detail Screen: /src/DetailScreen.tsx\n- Settings Screen: /src/SettingsScreen.tsx\n- API Integration Screen: /src/ApiIntegrationScreen.tsx\n- Local Storage Screen: /src/LocalStorageScreen.tsx\n- App Storage Screen: /src/AppStorageScreen.tsx\n\nThe full deployment URLs for the app are:\nDevelopment URL: https://ais-dev-hzsdrbnurhmofpcbth6mjb-494688611919.us-west2.run.app\nShared URL: https://ais-pre-hzsdrbnurhmofpcbth6mjb-494688611919.us-west2.run.app"
                     }
                   ].map((deliv, idx) => (
                     <div key={idx} className="border border-slate-100 dark:border-slate-800/80 p-5 rounded-2xl bg-white dark:bg-slate-950 shadow-sm font-sans">
                       <h4 className="font-bold text-sm text-slate-900 dark:text-white mb-2 leading-relaxed">{deliv.q}</h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pl-3 border-l-2 border-orange-400">
+                      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pl-3 border-l-2 border-orange-400 whitespace-pre-line">
                         {deliv.a}
                       </p>
                       <span className="text-[9px] block text-slate-400 text-right mt-2 italic">written by Brian McCarthy</span>
