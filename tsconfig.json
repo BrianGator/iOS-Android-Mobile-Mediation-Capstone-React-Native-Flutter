@@ -28,7 +28,8 @@
     "dist",
     "Android-App",
     "iOS-App",
-    "Flutter-Dart-Cross-Platform-files",
-    "React-Native-TypeScript-files"
+    "Cross-Platform-Flutter-Dart-Files",
+    "Cross-Platform-React-Native-TypeScript-Files",
+    "Cross-Platform-.NET-MAUI-Xamarin-CSharp-Files"
   ]
 }

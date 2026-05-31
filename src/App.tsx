@@ -2565,9 +2565,9 @@ export default function App() {
 ├── iOS-App/
 │   └── iOS-Swift-Code/
 │       └── BreathingTimerView.swift
-├── Flutter-Dart-Cross-Platform-files/
+├── Cross-Platform-Flutter-Dart-Files/
 │   └── meditation_player_screen.dart
-├── React-Native-TypeScript-files/
+├── Cross-Platform-React-Native-TypeScript-Files/
 │   └── BreathingPlayer.tsx
 ├── src/
 │   ├── App.tsx
